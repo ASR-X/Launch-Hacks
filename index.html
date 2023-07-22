@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacation Planner</title>
+
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Leaflet.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center">Vacation Planner</h1>
+
+        <!-- Form -->
+        <form id="planningForm" class="mb-5" action="http://localhost:8000/trip" method="GET">
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="duration">Duration (in weeks)</label>
+                <input type="number" id="duration" name="duration" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="max_destinations">Max Destinations</label>
+                <input type="number" id="max_destinations" name="max_destinations" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="budget">Budget</label>
+                <input type="number" id="budget" name="budget" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="interests">Interests</label>
+                <textarea id="interests" name="interests" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Plan Vacation</button>
+        </form>
+    </div>
+
+    <!-- jQuery, Bootstrap 4 JS and Axios -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Leaflet.js JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Custom JS -->
+    <script src="main.js"></script>
+</body>
+</html>
