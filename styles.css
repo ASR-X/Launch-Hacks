@@ -1,0 +1,95 @@
+body, html {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2348&q=80') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.container {
+    background-color: #134682; /* changing background color of form */
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 800px;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif; /* changing font */
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    animation: slideInRight 1s;
+}
+
+form {
+    animation: slideInLeft 1s;
+}
+
+.form-group label {
+    color: #ffffff; /* changing font color */
+    font-family: 'Open Sans', sans-serif; /* changing font */
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.form-group input, 
+.form-group textarea {
+    font-family: 'Open Sans', sans-serif; /* changing font */
+    border: none;
+    border-bottom: 2px solid #333;
+    border-radius: 0;
+    transition: border-color 0.3s;
+    color: #555; /* changing font color */
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: #007bff;
+    box-shadow: none;
+}
+
+.btn {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    color: #fff;
+    transition: background-color 0.3s;
+    font-family: 'Open Sans', sans-serif; /* changing font */
+}
+
+.btn:hover, 
+.btn:focus {
+    background-color: #0056b3;
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
