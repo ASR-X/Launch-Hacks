@@ -4,7 +4,6 @@ import os
 import re
 import urllib.request
 from bs4 import BeautifulSoup
-import requests
 import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -20,8 +19,8 @@ from fastapi.middleware.cors import CORSMiddleware
 # max_destinations = 3
 # budget = 6000
 #interests = 'eat food and go sightseeing'
-openai.organization = 'org-p0C1bwVzqYbYtNqNoFUDaDoV'
-openai.api_key = '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'
+openai.organization = 'REDACTED'
+openai.api_key = 'REDACTED'
 
 def get_gpt_output(gpt_prompt):
   message=[{'role': 'user', 'content': gpt_prompt}]
