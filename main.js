@@ -1,5 +1,3 @@
-// Action items: fix font color under "results", fix longitude error
-
 document.getElementById('planningForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const data = {
@@ -21,17 +19,18 @@ document.getElementById('planningForm').addEventListener('submit', function(e) {
 });
 
 function displayItinerary(itinerary) {
-    let content = '<p style = "font-color: white;"> A brief overview of your travel plan: </p>';
+    let content = '<p style = "color: white;"> A brief overview of your travel plan: </p>';
     for (const city in itinerary) {
         const data = itinerary[city][0];
-        content += `<h2 style = "font-color: white">${city}</h2>
-                    <p style = "font-color: white">Stay at <strong>${data.accommodations[0]}</strong> for <strong>${data['number of days']}</strong></p>
-                    <p style = "font-color: white">Activities:</p>
-                    <ul style = "font-color: white">`;
+        content += `<h2 style = "color: white">${city}</h2>
+                    <p style = "color: white">Stay at the <strong>${data.accommodations[0]}</strong> for <strong>${data['number of days']}</strong></p>
+                    <p style = "color: white">Activities:</p>
+                    <ul style = "color: white">`;
         data.activities.forEach(activity => {
-            content += `<li>Go to the ${activity[0]}</li>`;
+            content += `<li>Go to the <strong>${activity[0]}</strong></li>`;
         });
         content += '</ul>';
+        
     }
     document.getElementById('results').innerHTML = content;
 }
@@ -59,7 +58,7 @@ function createMiniMap(itinerary){
         const initialCenter = { lat: accommodationLatFloat, lng: accommodationLongFloat};
         const accommodationLabel = data.accommodations[0];
         const accommodationImageUrl = data.accommodations[2];
-        const accommodationImgString = `<h1 id="firstHeading" class="firstHeading" style="font-weight:bold; font-size: 14px;">${accommodationLabel}</h1><div><img src="${accommodationImageUrl}" alt="Image" style="max-width: 100%;"></div>`;
+        const accommodationImgString = `<h1 id="firstHeading" class="firstHeading" style="font-weight:bold; font-size: 14px; color: black;">${accommodationLabel}</h1><div><img src="${accommodationImageUrl}" alt="Image" style="max-width: 100%;"></div>`;
         const accommodationPointsItem = { lat: accommodationLatFloat, lng: accommodationLongFloat, img: accommodationImgString };
 
         const points = [];
@@ -74,7 +73,7 @@ function createMiniMap(itinerary){
             const activityLongFloat = parseFloat(activityLong);
 
             const activityImgUrl = activity[2]
-            const activityImgString = `<h1 id="firstHeading" class="firstHeading" style="font-weight:bold; font-size: 14px;">${activityLabel}</h1><div><img src="${activityImgUrl}" alt="Image" style="max-width: 100%;"></div>`;
+            const activityImgString = `<h1 id="firstHeading" class="firstHeading" style="font-weight:bold; font-size: 14px; color: black;">${activityLabel}</h1><div><img src="${activityImgUrl}" alt="Image" style="max-width: 100%;"></div>`;
 
             const activityPointsItem = { lat: activityLatFloat, lng: activityLongFloat, img: activityImgString };
             points.push(activityPointsItem);
