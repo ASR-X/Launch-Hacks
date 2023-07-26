@@ -72,6 +72,21 @@ form {
     background-color: #0056b3;
 }
 
+#map {
+    height: 100%;
+}
+  
+  /* 
+   * Optional: Makes the sample page fill the window. 
+   */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
 @keyframes slideInRight {
     0% {
         transform: translateX(100%);

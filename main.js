@@ -1,3 +1,5 @@
+// Action items: fix font color under "results", fix longitude error
+
 document.getElementById('planningForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const data = {
@@ -19,16 +21,15 @@ document.getElementById('planningForm').addEventListener('submit', function(e) {
 });
 
 function displayItinerary(itinerary) {
-    let content = 'A brief overview of your travel plan:';
+    let content = '<p style = "font-color: white;"> A brief overview of your travel plan: </p>';
     for (const city in itinerary) {
         const data = itinerary[city][0];
-        content += `<h2>${city}</h2>
-                    <p>Stay at <strong>${data.accommodations[0]}</strong></p>
-                    <p>Activities:</p>
-                    <ul>`;
+        content += `<h2 style = "font-color: white">${city}</h2>
+                    <p style = "font-color: white">Stay at <strong>${data.accommodations[0]}</strong> for <strong>${data['number of days']}</strong></p>
+                    <p style = "font-color: white">Activities:</p>
+                    <ul style = "font-color: white">`;
         data.activities.forEach(activity => {
-            // content += `<li>${activity[0]} at coordinates ${activity[1]} <img src="${activity[2]}" alt="${activity[0]}"></li>`;
-            content += `<li>Go to ${activity[0]}</li>`;
+            content += `<li>Go to the ${activity[0]}</li>`;
         });
         content += '</ul>';
     }
@@ -36,23 +37,33 @@ function displayItinerary(itinerary) {
 }
 
 function createMiniMap(itinerary){
-    var apiKey = 'our key';
-
     for (const city in itinerary){
         const containerId = 'mapContainer' + city;
         const newDiv = document.createElement('div');
         newDiv.id = containerId;
+        newDiv.style.height = '400px';
+        newDiv.style.width = '600px';
+        newDiv.style.margin = '20px';
+
+        const existingDiv = document.getElementById("mainBody");
+        existingDiv.appendChild(newDiv);
 
         const data = itinerary[city][0];
         
-        const coordsAccomodation = data.accomodations[1];
-        const [accommodationLat, accommodationLong] = coordsAccomodation.split(','); // Might have to change brackets
+        const coordsAccommodation = data['accommodations'][1];
+        const [accommodationLat, accommodationLong] = coordsAccommodation.split(','); // Might have to change brackets
 
         const accommodationLatFloat = parseFloat(accommodationLat);
         const accommodationLongFloat = parseFloat(accommodationLong);
+        
         const initialCenter = { lat: accommodationLatFloat, lng: accommodationLongFloat};
+        const accommodationLabel = data.accommodations[0];
+        const accommodationImageUrl = data.accommodations[2];
+        const accommodationImgString = `<h1 id="firstHeading" class="firstHeading" style="font-weight:bold; font-size: 14px;">${accommodationLabel}</h1><div><img src="${accommodationImageUrl}" alt="Image" style="max-width: 100%;"></div>`;
+        const accommodationPointsItem = { lat: accommodationLatFloat, lng: accommodationLongFloat, img: accommodationImgString };
 
         const points = [];
+        points.push(accommodationPointsItem)
 
         data.activities.forEach(activity => {
             const activityLabel = activity[0];
@@ -61,12 +72,12 @@ function createMiniMap(itinerary){
 
             const activityLatFloat = parseFloat(activityLat);
             const activityLongFloat = parseFloat(activityLong);
-            imageUrl = activity[2]
-            const contentImgString = `<div><img src="${imageUrl}" alt="Image" style="max-width: 100%;"></div>`;
 
-            const pointsItem = { 'lat': activityLatFloat, 'lng': activityLongFloat, 'label': activityLabel, 'img': contentImgString};
-            points.push(pointsItem);
+            const activityImgUrl = activity[2]
+            const activityImgString = `<h1 id="firstHeading" class="firstHeading" style="font-weight:bold; font-size: 14px;">${activityLabel}</h1><div><img src="${activityImgUrl}" alt="Image" style="max-width: 100%;"></div>`;
 
+            const activityPointsItem = { lat: activityLatFloat, lng: activityLongFloat, img: activityImgString };
+            points.push(activityPointsItem);
 
         });
 
@@ -77,12 +88,11 @@ function createMiniMap(itinerary){
 
         points.forEach(point => {
             const marker = new google.maps.Marker({
-                position: position,
+                position: {lat: point.lat, lng: point.lng},
                 map: map,
             });
 
             const infoWindow = new google.maps.InfoWindow({
-                ariaLabel: point.label,
                 content: point.img,
             });
 
@@ -92,21 +102,3 @@ function createMiniMap(itinerary){
         });
     }
 }
-
-// function displayMap(itinerary) {
-//     const map = L.map('map').setView([0, 0], 2); // Initiate the map
-//     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, }).addTo(map); // Set the tile layer
-
-//     for (const city in itinerary) {
-//         const data = itinerary[city][0];
-//         const coordsAccommodation = data.accommodations[1].split(',').map(x => parseFloat(x));
-//         const marker = L.marker(coordsAccommodation).addTo(map);
-//         marker.bindPopup(`<b>${city}</b><br>Accommodation: ${data.accommodations[0]}`);
-        
-//         data.activities.forEach(activity => {
-//             const coordsActivity = activity[1].split(',').map(x => parseFloat(x));
-//             const markerActivity = L.marker(coordsActivity).addTo(map);
-//             markerActivity.bindPopup(`<b>${city}</b><br>Activity: ${activity[0]}`);
-//         });
-//     }
-// }
