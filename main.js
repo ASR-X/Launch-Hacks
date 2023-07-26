@@ -10,7 +10,7 @@ document.getElementById('planningForm').addEventListener('submit', function(e) {
     axios.get('http://localhost:8000/trip', { params: data })
         .then(function(response) {
             document.getElementById('results').classList.remove('d-none');
-            displayItinerary(response.data.itinerary);
+            // displayItinerary(response.data.itinerary);
             createMiniMap(response.data.itinerary);
         })
         .catch(function(error) {
@@ -18,10 +18,49 @@ document.getElementById('planningForm').addEventListener('submit', function(e) {
         });
 });
 
-function displayItinerary(itinerary) {
-    let content = '<p style = "color: white;"> A brief overview of your travel plan: </p>';
-    for (const city in itinerary) {
+// function displayItinerary(itinerary) {
+//     let content = '<h style = "color: white;"> A brief overview of your travel plan: </h>';
+//     for (const city in itinerary) {
+//         const data = itinerary[city][0];
+//         content += `<h2 style = "color: white">${city}</h2>
+//                     <p style = "color: white">Stay at the <strong>${data.accommodations[0]}</strong> for <strong>${data['number of days']}</strong></p>
+//                     <p style = "color: white">Activities:</p>
+//                     <ul style = "color: white">`;
+//         data.activities.forEach(activity => {
+//             content += `<li>Go to the <strong>${activity[0]}</strong></li>`;
+//         });
+//         content += '</ul>';
+//         const containerId = 'mapContainer' + city;
+//         const newDiv = document.createElement('div');
+//         newDiv.id = containerId;
+//         newDiv.style.height = '400px';
+//         newDiv.style.width = '600px';
+//         newDiv.style.margin = '20px';
+
+//         const existingDiv = document.getElementById("mainBody");
+//         existingDiv.appendChild(newDiv);
+//         document.getElementById(containerId).innerHTML = content;
+//     }
+//     // document.getElementById('results').innerHTML = content;
+// }
+
+function createMiniMap(itinerary){
+    
+    for (const city in itinerary){
+        let content = '';
+
+        var containerIdDescription = 'mapContainer' + city + 'Description';
+        var newDiv = document.createElement('div');
+        newDiv.id = containerIdDescription;
+        newDiv.style.height = '200px';
+        newDiv.style.width = '600px';
+        newDiv.style.margin = '20px';
+
+        var existingDiv = document.getElementById("results");
+        existingDiv.appendChild(newDiv);
+
         const data = itinerary[city][0];
+        
         content += `<h2 style = "color: white">${city}</h2>
                     <p style = "color: white">Stay at the <strong>${data.accommodations[0]}</strong> for <strong>${data['number of days']}</strong></p>
                     <p style = "color: white">Activities:</p>
@@ -30,24 +69,19 @@ function displayItinerary(itinerary) {
             content += `<li>Go to the <strong>${activity[0]}</strong></li>`;
         });
         content += '</ul>';
-        
-    }
-    document.getElementById('results').innerHTML = content;
-}
 
-function createMiniMap(itinerary){
-    for (const city in itinerary){
-        const containerId = 'mapContainer' + city;
-        const newDiv = document.createElement('div');
-        newDiv.id = containerId;
+        document.getElementById(containerIdDescription).innerHTML = content;
+
+        // Create Map
+
+        var containerIdMap = 'mapContainer' + city + 'Map';
+        var newDiv = document.createElement('div')
+        newDiv.id = containerIdMap;
         newDiv.style.height = '400px';
         newDiv.style.width = '600px';
         newDiv.style.margin = '20px';
 
-        const existingDiv = document.getElementById("mainBody");
         existingDiv.appendChild(newDiv);
-
-        const data = itinerary[city][0];
         
         const coordsAccommodation = data['accommodations'][1];
         const [accommodationLat, accommodationLong] = coordsAccommodation.split(','); // Might have to change brackets
@@ -80,7 +114,7 @@ function createMiniMap(itinerary){
 
         });
 
-        const map = new google.maps.Map(document.getElementById(containerId), {
+        const map = new google.maps.Map(document.getElementById(containerIdMap), {
             center: initialCenter,
             zoom: 12,
         });
